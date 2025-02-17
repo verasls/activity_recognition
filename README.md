@@ -14,19 +14,40 @@ Before using this code, you need to:
 1. Download this project (click the green "Code" button and select "Download ZIP")
 2. Unzip the downloaded file
 3. Open the `activity_recognition.Rproj` file. This should open the project in RStudio
-6. In the RStudio Console, run:
+4. In the RStudio Console, run:
+
 ```r
 install.packages("renv")
 renv::restore()
 ```
+
 This will install all required packages.
 
 ## Using the code
 
 ### Run the analysis
 
-1. Open `main.R` in RStudio
+1. Open [`main.R`](main.R) in RStudio
 2. Update these lines with your data details:
+
+```r
+data <- vroom(
+  "path/to/your/data",  # Replace with path to your CSV file
+  skip = 10             # Replace with number of header lines (0 if none)
+)
+
+results <- classify_activities(
+  data = data,
+  time_col = "timestamp",  # Replace with your timestamp column name
+  x_col = "acc_x",         # Replace with your X acceleration column name
+  y_col = "acc_y",         # Replace with your Y acceleration column name
+  z_col = "acc_z",         # Replace with your Z acceleration column name
+  sampling_freq = 100,     # Replace with your sampling frequency in Hz
+  placement = "ankle",     # Choose: "ankle", "lower_back", or "hip"
+  model_type = "rf"        # Choose: "rf", "svm", or "knn"
+)
+```
+
 3. Click the "Source" button (or press Ctrl+Shift+S) to run the analysis
 
 ### Common issues
